@@ -119,7 +119,26 @@ To test the reachability of the web server (on `host-2-c`) do command *curl 172.
 
 Why this?
 As you might have noticed, during the setting up of `host-2-c`, an error has incurred:
-_*host-2-c: Unable to find image 'nginx:latest' locally*_. Fortunately the system is smart enough to correct it by itself, in fact on the next line there is written _*host-2-c: latest: Pulling from library/nginx*_ then the pulling and dowloading request for a newer image for nginx:latest are completed.
+_*host-2-c: Unable to find image 'nginx:latest' locally*_. Since the system is smart enough to correct it by itself --- in fact on the next line there is written _*host-2-c: latest: Pulling from library/nginx*_ then the pulling and dowloading request for a newer image for nginx:latest are completed --- I did not created a web page.
+If you want to create a web page, you can have a look [here](https://medium.com/@jgefroh/a-guide-to-using-nginx-for-static-websites-d96a9d034940 ) or [here](https://medium.com/@jasonrigden/how-to-host-a-static-website-with-nginx-8b2dd0c5b301 ).
+
+
+### Note
+
+`host-2-c` has been modified from "the usual script" because of incompatibilities with the new versions of docker and Trusty (all VMs run minimal/trusty64). In fact, leaving 
+
+```
+apt-get install -y docker-ce --assume-yes --force-yes
+```
+gives the following error
+```
+docker: Error response from daemon: OCI runtime create failed: container_linux.go:348: starting container process caused "process_linux.go:297: copying bootstrap data to pipe caused \"write init-p: broken pipe\"": unknown.
+```
+
+In order to avoid this, it is needed to specify a different Docker version
+```
+apt-get install docker-ce=18.06.1~ce~3-0~ubuntu --assume-yes --force-yes
+```
 
 
 # Commands meaning
@@ -137,6 +156,11 @@ Given the scripts by the professor, I adapted the code creating other scripts to
 | *ovs-vsctl add-br Name*                            | Set the machine to be a switch called _Name_                                                                                                                                                                           |
 | *ovs-vsctl add-port Name ethN tag=M*               | Into the switch called _Name_ a port _ethN_ is added and (if there are vlans) the corresponding tag _M_, previously set on the router, must be used                                                                    |
 | *curl 172.23.1.34:8080*                            | Using the port number 8080, the host (which can be either `host-1-a` or `host-1-b`) tries to reach a webpage hosted at address 172.23.1.34                                                                             |
+
+
+# Final notes
+
+This is a school project of the course _Design of network and communication systems_ at the _University of Trento_, Trento, Italy.
 
 
 
